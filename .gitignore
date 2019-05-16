@@ -1,0 +1,4 @@
+# Files to hide
+draft/
+env/
+__pycache__
