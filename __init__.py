@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#! ./env/bin/python3
 """
 MetOncoFit Interactive explorer
 
@@ -22,11 +22,14 @@ import dash_bootstrap_components as dbc
 
 import flask
 
+# Intialize the Flask/Dash application
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = 'MetOncoFit'
 
+# Read in data
 df = pd.read_json('db.json')
 
+# Create dataframes to parse data into three heat maps
 up = df.loc[(df["Type"] == "UPREGULATED") | (df["Type"] == "GAIN")]
 up = up.sort_values(by="Gini", ascending=False)
 neut = df.loc[(df["Type"] == "NEUTRAL") | (df["Type"] == "NEUT")]
@@ -53,6 +56,7 @@ colormap = [
     [1.0, 'rgb(49,54,149)']
 ]
 
+# Will be rendered as HTML. Description of the algorithm.
 _body = dbc.Container(
     dbc.Row(
         [
@@ -117,6 +121,7 @@ _body = dbc.Container(
     )
 )
 
+# Create dynamic parts that will allow client to interact with data
 _widgets = dbc.Container(
     [
         # Text that updates with slider values
@@ -180,6 +185,7 @@ _widgets = dbc.Container(
     ]
 )
 
+# Initialize the application
 app.layout = html.Div([_body, _widgets,
     html.Div(
         dcc.Graph(
@@ -306,7 +312,7 @@ app.layout = html.Div([_body, _widgets,
     )
 ])
 
-# Create callbacks - unfortunately Dash only supports one output per callback...
+# Create callbacks - unfortunately Dash only supports one output per callback, so I made three callbacks - same structure different heatmap.
 @app.callback(
     dash.dependencies.Output('up-heatmap', 'figure'),
     [dash.dependencies.Input('cancer-type', 'value'),
@@ -479,4 +485,4 @@ def display_value(value):
 #server = app.server
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0')
+    app.run_server()
