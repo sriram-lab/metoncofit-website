@@ -1,4 +1,3 @@
-#! ./env/bin/python3
 """
 MetOncoFit Interactive explorer
 
