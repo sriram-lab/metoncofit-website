@@ -1,20 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Initial website app for MetOncoFit.
+MetOncoFit Interactive explorer
 
-Current app layout:
-  - Description of MetOncoFit
-  - MetOncoFit Heatmaps
-
-Future implementation of the MetOncoFit app:
-  - Include the figures that are in the publication
-  - Exploratory data analysis
+This application was built with a Flask framework using Dash and Plotly. The explorer shows three heatmaps that shows the top 10 features predicted by MetOncoFit on the y-axis, the genes corresponding to the feature predictions on the x-axis, and each cell is the corresponding gene-feature value.
 
 @author: Scott Campit
 """
 import pandas as pd
 import numpy as np
-#import markdown
 import json
 
 from plotly import tools
@@ -29,11 +22,10 @@ import dash_bootstrap_components as dbc
 
 import flask
 
-# Start the application using bootstrap
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app.title = 'MetOncoFit'
 
-#df = pd.read_json(r'/var/www/metoncofit/metoncofit/db.json', orient='columns')
-df = pd.read_json()
+df = pd.read_json('db.json')
 
 up = df.loc[(df["Type"] == "UPREGULATED") | (df["Type"] == "GAIN")]
 up = up.sort_values(by="Gini", ascending=False)
@@ -60,7 +52,6 @@ colormap = [
     [0.8888888888888888, 'rgb(69,117,180)'],
     [1.0, 'rgb(49,54,149)']
 ]
-
 
 _body = dbc.Container(
     dbc.Row(
@@ -485,7 +476,7 @@ def display_value(value):
     return 'Number of genes displayed: {}'.format(value, value)
 
 # For server
-server = app.server
+#server = app.server
 
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0')
