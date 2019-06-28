@@ -42,17 +42,39 @@ cancer_type = df["Cancer"].unique()
 prediction_type = df["Target"].unique()
 
 # Color scale:
+#colormap = [
+#    [0.0, 'rgb(165,0,38)'],
+#    [0.1111111111111111, 'rgb(215,48,39)'],
+#    [0.2222222222222222, 'rgb(244,109,67)'],
+#    [0.3333333333333333, 'rgb(253,174,97)'],
+#    [0.4444444444444444, 'rgb(254,224,144)'],
+#    [0.5555555555555556, 'rgb(224,243,248)'],
+#    [0.6666666666666666, 'rgb(171,217,233)'],
+#    [0.7777777777777778, 'rgb(116,173,209)'],
+#    [0.8888888888888888, 'rgb(69,117,180)'],
+#    [1.0, 'rgb(49,54,149)']
+#]
+
+# Red monotonic gradient
+#colormap = [
+#    [0.0, 'rgb(255, 255, 255)'],
+#    [0.167, 'rgb(255, 204, 204)'],
+#    [0.33367, 'rgb(255, 153, 153)'],
+#    [0.50067, 'rgb(255, 102, 102)'],
+#    [0.66767, 'rgb(255, 51, 51)'],
+#    [0.83467, 'rgb(255, 0, 0)'],
+#    [1.0, 'rgb(204, 0, 0)']
+#]
+
+# Blue Monotonic gradient
 colormap = [
-    [0.0, 'rgb(165,0,38)'],
-    [0.1111111111111111, 'rgb(215,48,39)'],
-    [0.2222222222222222, 'rgb(244,109,67)'],
-    [0.3333333333333333, 'rgb(253,174,97)'],
-    [0.4444444444444444, 'rgb(254,224,144)'],
-    [0.5555555555555556, 'rgb(224,243,248)'],
-    [0.6666666666666666, 'rgb(171,217,233)'],
-    [0.7777777777777778, 'rgb(116,173,209)'],
-    [0.8888888888888888, 'rgb(69,117,180)'],
-    [1.0, 'rgb(49,54,149)']
+    [0.0, 'rgb(255, 255, 255)'],
+    [0.167, 'rgb(204, 229, 255)'],
+    [0.33367, 'rgb(153, 204, 255)'],
+    [0.50067, 'rgb(102, 178, 255)'],
+    [0.66767, 'rgb(51, 153, 255)'],
+    [0.83467, 'rgb(0, 128, 255)'],
+    [1.0, 'rgb(0, 102, 204)']
 ]
 
 # Will be rendered as HTML. Description of the algorithm.
@@ -64,34 +86,28 @@ _body = dbc.Container(
                     html.H1("MetOncoFit")
                     ], style={'marginTop':30, 'marginBottom':30}),
                 html.Div([
-                    html.H4("A Machine Learning Algorithm to Identify Common Biochemical and Topological Attributes of Metabolic Genes Recurrently Dysregulated in Tumors"),
                     html.P(
                     """
-                    MetOncoFit is a data-driven approach that uses biochemical and metabolic attributes to predict tumor differential expression, copy number variation, and patient survival.
+                    MetOncoFit is a machine learning approach that uses biochemical and metabolic attributes to predict tumor differential expression, copy number variation, and patient survival.
                     """
                     )
                 ], style={'marginTop':30, 'marginBottom':30}),
                 html.Div([
-                    html.H4("Installing MetOncoFit"),
+                    html.H2("Introduction"),
                     html.P(
                     """
-                    We recommend installing MetOncoFit inside a virtual environment.
+                    Tumors reprogram normal cellular metabolism to support uncontrolled proliferation. While some of these metabolic reprogramming strategies are common across most tumors, such as the Warburg effect, there must be diverse metabolic objectives that contribute to tumor heterogeneity.
 
-                    To install the package, use PyPI:
+                    We hypothesized that cancer cells have few key changes in the metabolic network, and examined frequently dysregulated metabolic genes using a multi-scale systems biology approach to determine commone features that contribute to metabolic dysregulation in tumors.
+
                     """
                     )
                 ], style={'marginTop':30, 'marginBottom':30}),
                 html.Div([
-                    html.P('''
-                    > pip install metoncofit
-                    ''')],
-                    style={'marginTop':10, 'marginBottom':10, 'font-family':'courier', 'background-color':'#D3D3D3', 'color':'#111111', 'text-indent':'1em'}
-                ),
-                html.Div([
-                    html.H4("Contributing to the MetOncoFit project"),
+                    html.H4("Installing and Using the MetOncoFit approach"),
                     html.P(
                     """
-                    Contributions are welcome! Please read the contributions guide to get started.
+                    The MetOncoFit interactive explorer shows the top 10 features predicted by MetOncoFit and the feature values with respect to each gene. All 10 cancer models and their predictions for differential expression, copy number variation, and patient survival are in this explorer.
                     """),
                     html.P(
                     """
@@ -99,7 +115,7 @@ _body = dbc.Container(
                     ),
                     html.P(
                     """
-                    To support the MetOncoFit project, you can cite our publication:
+                    To download the source code, please visit out GitHub respository: https://github.com/sriram-lab/MetOncoFit.To support the MetOncoFit project, you can cite our publication:
                     """
                     ),
                     html.P(
