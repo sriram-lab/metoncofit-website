@@ -127,7 +127,6 @@ def make_struct(hm_id='type-heatmap', data=df, nam='type', cmap=colormap):
                             )
                         ),
                     autosize=False,
-                    #width=1000,
                     yaxis=dict(
                         automargin=True,
                         tickfont=dict(
