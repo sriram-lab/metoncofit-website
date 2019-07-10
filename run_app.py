@@ -21,17 +21,17 @@ import dash_bootstrap_components as dbc
 
 import flask
 
-import static
-import functions
+import metoncofit.static
+import metoncofit.functions
 #import callbacks
-import col
+import metoncofit.col
 
 # Intialize the Flask/Dash application
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = 'MetOncoFit'
 
 # Read in data
-df = pd.read_json('db.json')
+df = pd.read_json('./data/db.json')
 
 # Create dataframes to parse data into three heat maps
 up = df.loc[(df["Type"] == "UPREGULATED") | (df["Type"] == "GAIN")]
@@ -43,20 +43,20 @@ neut = neut.sort_values(by="Gini", ascending=False)
 down = df.loc[(df["Type"] == "DOWNREGULATED") | (df["Type"] == "LOSS")]
 down = down.sort_values(by="Gini", ascending=False)
 
-colormap = col.Choose_Gradient('diverge')
+colormap = metoncofit.col.Choose_Gradient('red')
 
 # Text describing MetOncoFit
-_body = static.header()
+_body = metoncofit.static.header()
 
 # Create dynamic parts that will allow client to interact with data
-_widgets = functions.widget(data=df)
+_widgets = metoncofit.functions.widget(data=df)
 
 
-up_heatmap = functions.make_struct(
+up_heatmap = metoncofit.functions.make_struct(
     hm_id='up-heatmap', data=up, nam='up', cmap=colormap)
-neut_heatmap = functions.make_struct(
+neut_heatmap = metoncofit.functions.make_struct(
     hm_id='neut-heatmap', data=neut, nam='neut', cmap=colormap)
-down_heatmap = functions.make_struct(
+down_heatmap = metoncofit.functions.make_struct(
     hm_id='down-heatmap', data=down, nam='down', cmap=colormap)
 
 # Initialize the application
