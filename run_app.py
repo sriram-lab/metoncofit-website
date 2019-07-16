@@ -7,7 +7,7 @@ This application was built with a Flask framework using Dash and Plotly. The exp
 """
 import pandas as pd
 import numpy as np
-import json
+import json, os
 
 from plotly import tools
 import plotly.plotly as py
@@ -31,7 +31,8 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = 'MetOncoFit'
 
 # Read in data
-df = pd.read_json('./data/db.json')
+base = os.path.dirname(os.path.abspath(__file__))
+df = pd.read_json(base+'/data/db.json')
 
 # Create dataframes to parse data into three heat maps
 up = df.loc[(df["Type"] == "UPREGULATED") | (df["Type"] == "GAIN")]
