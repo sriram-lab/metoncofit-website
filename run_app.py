@@ -51,7 +51,6 @@ _body = metoncofit.static.header()
 # Create dynamic parts that will allow client to interact with data
 _widgets = metoncofit.functions.widget(data=df)
 
-
 up_heatmap = metoncofit.functions.make_struct(
     hm_id='up-heatmap', data=up, nam='up', cmap=colormap)
 neut_heatmap = metoncofit.functions.make_struct(
@@ -81,8 +80,7 @@ def update_up(cancer_choice, prediction_choice, slider_choice):
     up_tmp = up_df['Gene'].unique().tolist()
     up_tmp = up_tmp[0:slider_choice]
     up_df = up_df.loc[up_df['Gene'].isin(up_tmp)]
-
-    # Melt dataframe and re-sort by gene expression
+    up_df = up_df.sort_values(['Gini', 'Value'], ascending=False)
 
     custom_hover = []
     for _, i in up_df.iterrows():
@@ -92,22 +90,12 @@ def update_up(cancer_choice, prediction_choice, slider_choice):
                                            i['Value'])+'<br>'+'R: '+'{0:.2f}'.format(i['R'])
         custom_hover.append(dat)
 
-    # Capture features
-    feat = up_df.sort_values(by='Gini', ascending=False)
-    feat = feat["Feature"].unique().tolist()
-
-    # pivot
-    arr = up_df.pivot_table(index='Feature', columns='Gene', values='Value')
-    arr = arr.reindex(feat)
-    arr = arr.sort_values(
-        by=['NCI-60 gene expression'], axis=1, ascending=False)
-
     return {
         'data': [(
             go.Heatmap(
-                x=arr.columns.tolist(),
-                y=arr.index,
-                z=arr.values,
+                x=up_df['Gene'],
+                y=up_df['Feature'],
+                z=up_df['Value'],
                 name='up-heatmap',
                 colorscale=colormap,
                 text=custom_hover,
@@ -126,7 +114,6 @@ def update_up(cancer_choice, prediction_choice, slider_choice):
                     )
                 ),
             autosize=False,
-            #width=1000,
             yaxis=dict(
                 automargin=True,
                 autorange='reversed',
@@ -151,8 +138,7 @@ def update_neut(cancer_choice, prediction_choice, slider_choice):
     neut_tmp = neut_df['Gene'].unique().tolist()
     neut_tmp = neut_tmp[0:slider_choice]
     neut_df = neut_df.loc[neut_df['Gene'].isin(neut_tmp)]
-
-    # Melt dataframe and re-sort by gene expression
+    neut_df = neut_df.sort_values(['Gini', 'Value'], ascending=False)
 
     custom_hover = []
     for _, i in neut_df.iterrows():
@@ -162,22 +148,12 @@ def update_neut(cancer_choice, prediction_choice, slider_choice):
                                            i['Value'])+'<br>'+'R: '+'{0:.2f}'.format(i['R'])
         custom_hover.append(dat)
 
-    # Capture features
-    feat = neut_df.sort_values(by='Gini', ascending=False)
-    feat = feat["Feature"].unique().tolist()
-
-    # pivot
-    arr = neut_df.pivot_table(index='Feature', columns='Gene', values='Value')
-    arr = arr.reindex(feat)
-    arr = arr.sort_values(
-        by=['NCI-60 gene expression'], axis=1, ascending=False)
-
     return {
         'data': [(
             go.Heatmap(
-                x=arr.columns.tolist(),
-                y=arr.index,
-                z=arr.values,
+                x=neut_df['Gene'],
+                y=neut_df['Feature'],
+                z=neut_df['Value'],
                 name='neut-heatmap',
                 colorscale=colormap,
                 text=custom_hover,
@@ -196,7 +172,6 @@ def update_neut(cancer_choice, prediction_choice, slider_choice):
                     )
                 ),
             autosize=False,
-            #width=1000,
             yaxis=dict(
                 automargin=True,
                 autorange='reversed',
@@ -221,8 +196,7 @@ def update_down(cancer_choice, prediction_choice, slider_choice):
     down_tmp = down_df['Gene'].unique().tolist()
     down_tmp = down_tmp[0:slider_choice]
     down_df = down_df.loc[down_df['Gene'].isin(down_tmp)]
-
-    # Melt dataframe and re-sort by gene expression
+    down_df = down_df.sort_values(['Gini', 'Value'], ascending=False)
 
     custom_hover = []
     for _, i in down_df.iterrows():
@@ -232,22 +206,12 @@ def update_down(cancer_choice, prediction_choice, slider_choice):
                                            i['Value'])+'<br>'+'R: '+'{0:.2f}'.format(i['R'])
         custom_hover.append(dat)
 
-    # Capture features
-    feat = down_df.sort_values(by='Gini', ascending=False)
-    feat = feat["Feature"].unique().tolist()
-
-    # pivot
-    arr = down_df.pivot_table(index='Feature', columns='Gene', values='Value')
-    arr = arr.reindex(feat)
-    arr = arr.sort_values(
-        by=['NCI-60 gene expression'], axis=1, ascending=False)
-
     return {
         'data': [(
             go.Heatmap(
-                x=arr.columns.tolist(),
-                y=arr.index,
-                z=arr.values,
+                x=down_df['Gene'],
+                y=down_df['Feature'],
+                z=down_df['Value'],
                 name='down-heatmap',
                 colorscale=colormap,
                 text=custom_hover,
@@ -266,7 +230,6 @@ def update_down(cancer_choice, prediction_choice, slider_choice):
                     )
                 ),
             autosize=False,
-            #width=1000,
             yaxis=dict(
                 automargin=True,
                 autorange='reversed',
@@ -285,8 +248,8 @@ def update_down(cancer_choice, prediction_choice, slider_choice):
     def display_value(value):
             return 'Number of genes displayed: {}'.format(value, value)
 
-        # For server
-        #server = app.server
+# For server
+#server = app.server
 
 
 if __name__ == '__main__':
