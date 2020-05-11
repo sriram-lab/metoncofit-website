@@ -60,7 +60,10 @@ def header():
                             ),
                         html.P(
                             """
-                        To download the source code, please visit out GitHub respository: https://github.com/sriram-lab/MetOncoFit.To support the MetOncoFit project, you can cite our publication:
+                        To download the source code or contribute to the MetOncoFit project, please visit out [GitHub 
+                        respository](https://github.com/sriram-lab/MetOncoFit). 
+                        
+                        To support the MetOncoFit project, you can cite our publication:
                         """
                             ),
                         html.P(
@@ -69,7 +72,8 @@ def header():
                             ),
                         html.P(
                             """
-                        Oruganty, K., Campit, S.E., Mamde, S., & Chandrasekaran, S. Common biochemical and topological attributes of metabolic genes recurrently dysregulated in tumors.
+                        Oruganty, Krishnadev, Campit, S.E., Mamde, S., Lyssiotis, C.A.,  and Chandrasekaran, 
+                        S. "Common biochemical properties of metabolic genes recurrently dysregulated in tumors." Cancer & Metabolism 8, no. 1 (2020): 1-15.
                         """
                             )
                         ], style={'marginTop': 30, 'marginBottom': 30}),
